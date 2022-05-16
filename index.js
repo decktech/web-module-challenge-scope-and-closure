@@ -68,7 +68,7 @@ NOTE: This will be a callback function for the tasks below
 */
 
 function inning(){
-    return Math.round(Math.random() * 3)
+    return Math.round(Math.random() * 2)
 }
 
 //console.log(inning())
@@ -90,12 +90,11 @@ Use the finalScore function below to do the following:
 
 function finalScore(callback, numInnings){
   let obj = {};
-  obj.Home = numInnings * callback1;
-  obj.Away = numInnings * callback2;
+  obj.Home = numInnings * callback();
+  obj.Away = numInnings * callback();
   return obj;
 }
-const callback1 = inning();
-const callback2 = inning();
+
 //console.log(finalScore(inning, 9))
 
 /* ⚾️⚾️⚾️ Task 4: getInningScore() ⚾️⚾️⚾️
@@ -113,11 +112,12 @@ For example: invoking getInningScore(inning) might return this object:
 
 function getInningScore(callback) {
   let obj = {};
-  obj.Home = callback1;
-  obj.Away = callback2;
+  obj.Home = callback();
+  obj.Away = callback();
   return obj;
 }
-//console.log(getInningScore(inning))
+console.log(getInningScore(inning).Home)
+
 
 /* STRETCH: ⚾️⚾️⚾️ Task 5: scoreboard() ⚾️⚾️⚾️
 Use the scoreboard function below to do the following:
@@ -159,9 +159,30 @@ Use the scoreboard function below to do the following:
   "This game will require extra innings: Away 10 - Home 10"
 ] */
 // NOTE: There is no test associated with this code; if your output matches the given example, consider it complete!
-function scoreboard(/* CODE HERE */) {
-  /* CODE HERE */
+function scoreboard(innScore, randomNum, numInnings) {
+  let arr = [];
+  let awayTotal = 0;
+  let homeTotal = 0;
+  for (let i = 1; i < numInnings + 1; i++) {
+    const awayCount = innScore(randomNum).Away;
+    const homeCount = innScore(randomNum).Home;
+    arr.push(`Inning ${i}: Away ${awayCount} - Home: ${homeCount}`);
+    awayTotal += awayCount;
+    homeTotal += homeCount;
+  }
+  if (awayTotal === homeTotal) {
+    arr.push(`This game will require extra innings: Home ${homeTotal} - Away ${awayTotal}`)
+  }
+  else if (awayTotal < homeTotal) {
+    arr.push(`Home team wins: Home ${homeTotal} - Away ${awayTotal}`)
+  }
+  else if (awayTotal > homeTotal) {
+    arr.push(`Away team wins: Home ${homeTotal} - Away ${awayTotal}`)
+  }
+  return arr;
 }
+console.log(scoreboard(getInningScore,inning, 9));
+
 
 
 
