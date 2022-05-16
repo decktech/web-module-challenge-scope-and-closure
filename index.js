@@ -38,7 +38,7 @@ console.log('example task:', processFirstItem(['foo','bar'],function(str){return
 */
 
 // counter1 code
-function counterMaker() {
+function counterMaker() {2
   let count = 0;
   return function counter() {
    return count++;
@@ -54,6 +54,9 @@ function counter2() {
   return count++;
 }
 
+//counter1 because it provides an inner function which has access to it's parent function.
+//counter1 is preferable when we dont want the function 'counter' to be accessible outside of the function 'counterMaker' scope
+
 
 /* ⚾️⚾️⚾️ Task 2: inning() ⚾️⚾️⚾️
 Use the inning function below to do the following:
@@ -64,9 +67,11 @@ Use the inning function below to do the following:
 NOTE: This will be a callback function for the tasks below
 */
 
-function inning(/*Code Here*/){
-    /*Code Here*/
+function inning(){
+    return Math.round(Math.random() * 3)
 }
+
+//console.log(inning())
 
 
 /* ⚾️⚾️⚾️ Task 3: finalScore() ⚾️⚾️⚾️
@@ -83,10 +88,15 @@ Use the finalScore function below to do the following:
 }
 */ 
 
-function finalScore(/*Code Here*/){
-  /*Code Here*/
+function finalScore(callback, numInnings){
+  let obj = {};
+  obj.Home = numInnings * callback1;
+  obj.Away = numInnings * callback2;
+  return obj;
 }
-
+const callback1 = inning();
+const callback2 = inning();
+//console.log(finalScore(inning, 9))
 
 /* ⚾️⚾️⚾️ Task 4: getInningScore() ⚾️⚾️⚾️
 Use the getInningScore() function below to do the following:
@@ -101,11 +111,13 @@ For example: invoking getInningScore(inning) might return this object:
   */
 
 
-function getInningScore(/*Your Code Here */) {
-  /*Your Code Here */
-
+function getInningScore(callback) {
+  let obj = {};
+  obj.Home = callback1;
+  obj.Away = callback2;
+  return obj;
 }
-
+//console.log(getInningScore(inning))
 
 /* STRETCH: ⚾️⚾️⚾️ Task 5: scoreboard() ⚾️⚾️⚾️
 Use the scoreboard function below to do the following:
